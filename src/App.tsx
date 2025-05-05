@@ -1,4 +1,4 @@
-import CreateJobScreen from "./screens/jobs/createJob"
+import CreateJobScreen from "./pages/jobs/createJob"
 
 export default function App() {
 
