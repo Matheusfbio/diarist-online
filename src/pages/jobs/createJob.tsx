@@ -2,23 +2,24 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useState } from 'react';
-
-type formValue = {
-  job: string;
-  name_company: string;
-  price: string;
-  email: string;
-};
+import type { formValue } from '@/types';
 
 export default function CreateJobScreen() {
   const { register, handleSubmit, control, formState, setValue } =
-    useForm<formValue>();
+    useForm<formValue>({
+      defaultValues: {
+        job: '',
+        name_company: '',
+        price: '',
+        email: '',
+      },
+    });
   const { errors } = formState;
 
   const [formattedValue, setFormattedValue] = useState('');
 
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const rawValue = event.target.value.replace(/\D/g, ''); // remove tudo que não for número
+    const rawValue = event.target.value.replace(/\D/g, '');
     const numberValue = Number(rawValue) / 100;
 
     const formatted = numberValue.toLocaleString('pt-BR', {
@@ -27,7 +28,7 @@ export default function CreateJobScreen() {
     });
 
     setFormattedValue(formatted);
-    setValue('price', formatted); // atualiza valor no form
+    setValue('price', formatted);
   }
 
   const onSubmit = (data: formValue) => console.table(data);
